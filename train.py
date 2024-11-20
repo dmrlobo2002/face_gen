@@ -3,7 +3,7 @@ import torch
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
-from data_processing import load_data
+from data_loader import load_data
 from diffusers import StableDiffusionPipeline, DDPMScheduler
 import os
 
@@ -46,7 +46,7 @@ global_step = 0
 for epoch in range(num_epochs):
     pipe.unet.train()
     for batch in tqdm(dataloader, desc=f"Epoch {epoch+1}/{num_epochs}"):
-        latents = pipe.vae.encode(batch.to(device, dtype=torch.float16)).latent_dist.sample()
+        latents = pipe.vae.encode(batch.to(device, dtype=torch.float32)).latent_dist.sample()
         latents = latents * 0.18215  # Scaling as per SD implementation
 
         # Sample noise to add to the latents

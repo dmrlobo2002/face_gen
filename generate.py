@@ -1,5 +1,3 @@
-# generate.py
-
 import torch
 from diffusers import StableDiffusionPipeline
 import os
@@ -10,22 +8,19 @@ model_path = "./saved_models/epoch-10"  # Path to your trained model
 output_dir = "./generated_images"
 os.makedirs(output_dir, exist_ok=True)
 num_images = 5  # Number of images to generate
-prompt = "A high-resolution photo of a face"  # Prompt used during training
+prompt = "A high-resolution photo of a male face"  # Prompt used during training
 
 # Set device
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 print("Selected device:", device)
 
 # Load the fine-tuned Stable Diffusion model
 pipe = StableDiffusionPipeline.from_pretrained(
     model_path,
-    torch_dtype=torch.float16,
+    torch_dtype=torch.float32,
     safety_checker=None,  # Disable safety checker for custom models
     feature_extractor=None  # Disable feature extractor if not needed
 ).to(device)
-
-# Enable memory-efficient attention (optional, for large models)
-pipe.enable_xformers_memory_efficient_attention()
 
 # Generate images
 for i in range(num_images):
