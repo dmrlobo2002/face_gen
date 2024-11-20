@@ -1,5 +1,5 @@
 import os
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from torch.utils.data import Dataset, DataLoader
 import torchvision.transforms as transforms
 
@@ -33,16 +33,22 @@ class CelebADataset(Dataset):
             torch.Tensor: Transformed image.
         """
         img_path = self.img_paths[idx]
-        image = Image.open(img_path).convert("RGB")  # Ensure all images are RGB
-        if self.transform:
-            image = self.transform(image)
-        return image
+        try:
+            # Load and convert the image
+            image = Image.open(img_path).convert("RGB")  # Ensure all images are RGB
+            if self.transform:
+                image = self.transform(image)
+            return image
+        except (UnidentifiedImageError, OSError) as e:
+            print(f"Skipping corrupted or unreadable file: {img_path}. Error: {e}")
+            # Return the next valid image in the dataset
+            return self.__getitem__((idx + 1) % len(self))
 
 
 def load_data(img_dir, batch_size=32, shuffle=True, num_workers=4):
     """
     Load the CelebA dataset and create a DataLoader.
-    
+
     Args:
         img_dir (str): Path to the image directory.
         batch_size (int): Batch size for training.
