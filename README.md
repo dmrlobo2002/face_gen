@@ -1,6 +1,6 @@
 # Face Generation with Fine-Tuned Stable Diffusion
 
-This repository demonstrates how to fine-tune a Stable Diffusion model on the CelebA dataset and then generate new face images from a textual prompt.
+This repository demonstrates how to fine-tune a Stable Diffusion model on the CelebA dataset and then generate new face images from a textual prompt. You can find the training dataset in OneDrive.
 
 ## Overview
 
