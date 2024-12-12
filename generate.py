@@ -100,10 +100,10 @@ def generate_faces(
 
 def main():
     # Configuration
-    model_path = "./fine_tuned_model/final_model"  # Path to your fine-tuned UNet
-    output_dir = "./generated_images"
+    model_path = "./fine_tuned_model_all_images/final_model"  # Path to your fine-tuned UNet
+    output_dir = "./generated_images_6"
     os.makedirs(output_dir, exist_ok=True)
-    num_images = 10  # Number of images to generate
+    num_images = 5000  # Number of images to generate
     prompt = "A high-resolution photo of a face"  # Prompt used for generation
 
     # Device configuration

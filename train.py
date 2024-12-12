@@ -13,7 +13,7 @@ from data_loader import load_data  # Ensure data_loader.py is in the same direct
 class Config:
     # Paths
     data_dir = "./img_align_celeba"  # Directory where CelebA images are stored
-    output_dir = "./fine_tuned_model"
+    output_dir = "./fine_tuned_model_all_images"
     os.makedirs(output_dir, exist_ok=True)
 
     # Training parameters
@@ -30,7 +30,7 @@ class Config:
     prompt = "A high-resolution photo of a face"  # Generic prompt
 
     # Device
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")  # Use cuda:0 if available
+    device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")  # Use cuda:0 if available
     print("Using device:", device)
 
 
@@ -49,7 +49,7 @@ def main():
         batch_size=config.batch_size,
         shuffle=True,
         num_workers=config.num_workers,
-        max_images=10000  # Limit to 10,000 images
+        max_images=None  # Limit to 10,000 images
     )
 
     # Load Stable Diffusion components

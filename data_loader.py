@@ -165,7 +165,7 @@ if __name__ == "__main__":
         batch_size=16,    # Adjust based on your GPU memory
         shuffle=True,
         num_workers=4,    # Adjust based on your CPU cores
-        max_images=10000  # Limit to 10,000 images
+        max_images=None  # Limit to 10,000 images
     )
 
     # Iterate through one batch to verify
