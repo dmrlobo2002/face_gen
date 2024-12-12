@@ -28,17 +28,17 @@ random.shuffle(gen_images)
 num_images = min(num_images, len(real_images), len(gen_images))
 
 # Copy subset of images to subset directories
-#for img in real_images[:num_images]:
-#    shutil.copy(os.path.join(real_dir, img), os.path.join(real_subset_dir, img))
+for img in real_images[:num_images]:
+   shutil.copy(os.path.join(real_dir, img), os.path.join(real_subset_dir, img))
 
-#for img in gen_images[:num_images]:
-#    shutil.copy(os.path.join(gen_dir, img), os.path.join(gen_subset_dir, img))
+for img in gen_images[:num_images]:
+   shutil.copy(os.path.join(gen_dir, img), os.path.join(gen_subset_dir, img))
 
 # Compute FID using subset directories
 score = fid.compute_fid(real_subset_dir, gen_subset_dir, num_workers=24, batch_size=10)
 print("FID score:", score)
 
-# Optional: Clean up subset directories after computation
-# Uncomment these lines if you want to remove the subset directories after use
-# shutil.rmtree(real_subset_dir)
-# shutil.rmtree(gen_subset_dir)
+Optional: Clean up subset directories after computation
+Uncomment these lines if you want to remove the subset directories after use
+shutil.rmtree(real_subset_dir)
+shutil.rmtree(gen_subset_dir)

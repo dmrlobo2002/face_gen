@@ -16,19 +16,7 @@ def generate_faces(
     guidance_scale: float = 7.5,
     disable_safety_checker: bool = True
 ):
-    """
-    Generates face images using the fine-tuned Stable Diffusion model.
 
-    Args:
-        model_path (str): Path to the fine-tuned UNet model directory.
-        prompt (str): Text prompt for image generation.
-        num_images (int): Number of images to generate.
-        output_dir (str): Directory to save the generated images.
-        device (torch.device): Device to run the model on.
-        num_inference_steps (int, optional): Number of denoising steps. Defaults to 50.
-        guidance_scale (float, optional): Scale for classifier-free guidance. Defaults to 7.5.
-        disable_safety_checker (bool, optional): Whether to disable the safety checker. Defaults to True.
-    """
     # Ensure output directory exists
     os.makedirs(output_dir, exist_ok=True)
 
@@ -100,7 +88,7 @@ def generate_faces(
 
 def main():
     # Configuration
-    model_path = "./fine_tuned_model_all_images/final_model"  # Path to your fine-tuned UNet
+    model_path = "./fine_tuned_model_all_images/final_model"  # Path to Model
     output_dir = "./generated_images_6"
     os.makedirs(output_dir, exist_ok=True)
     num_images = 5000  # Number of images to generate
@@ -111,7 +99,7 @@ def main():
     print(f"Selected device: {device}")
 
     # Parameters for generation
-    num_inference_steps = 50  # More steps for higher quality
+    num_inference_steps = 50  # More steps = higher quality
     guidance_scale = 7.5      # Higher guidance scale for adherence to prompt
 
     # Generate images
@@ -123,7 +111,7 @@ def main():
         device=device,
         num_inference_steps=num_inference_steps,
         guidance_scale=guidance_scale,
-        disable_safety_checker=True  # Set to False if you want to enable safety checks
+        disable_safety_checker=True  # Set to False if you want to enable safety checks, had to disable due to model flagging generated images
     )
 
 if __name__ == "__main__":

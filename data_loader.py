@@ -9,17 +9,8 @@ import torch
 
 
 class CelebADataset(Dataset):
-    """
-    Custom Dataset class for CelebA dataset.
-    """
     def __init__(self, img_dir, tokenizer, transform=None, prompt="A high-resolution photo of a face"):
-        """
-        Args:
-            img_dir (str): Path to the directory containing images.
-            tokenizer (transformers.PreTrainedTokenizer): Tokenizer for the text prompts.
-            transform (callable, optional): Transformation to apply to the images.
-            prompt (str): Text prompt associated with each image.
-        """
+        
         self.img_dir = img_dir
         self.transform = transform
         self.prompt = prompt
@@ -36,17 +27,6 @@ class CelebADataset(Dataset):
         return len(self.img_paths)
 
     def __getitem__(self, idx):
-        """
-        Retrieves the image and its corresponding tokenized prompt.
-
-        Args:
-            idx (int): Index of the image to retrieve.
-
-        Returns:
-            dict: A dictionary containing:
-                - "pixel_values" (torch.Tensor): Transformed image tensor.
-                - "input_ids" (torch.Tensor): Tokenized prompt tensor.
-        """
         max_retries = 10
         original_idx = idx  # Keep track of the original index to prevent infinite loops
 
@@ -87,20 +67,6 @@ class CelebADataset(Dataset):
 
 
 def load_data(img_dir, tokenizer, batch_size=16, shuffle=True, num_workers=4, max_images=None):
-    """
-    Load the CelebA dataset and create a DataLoader.
-
-    Args:
-        img_dir (str): Path to the image directory.
-        tokenizer (transformers.PreTrainedTokenizer): Tokenizer for the text prompts.
-        batch_size (int): Batch size for training.
-        shuffle (bool): Whether to shuffle the data.
-        num_workers (int): Number of subprocesses for data loading.
-        max_images (int, optional): Maximum number of images to load. If None, load all available images.
-
-    Returns:
-        DataLoader: DataLoader for the CelebA dataset.
-    """
     # Define the transformation pipeline
     transform = transforms.Compose([
         transforms.Resize((512, 512)),  # Increased resolution to match Stable Diffusion requirements
@@ -155,17 +121,16 @@ if __name__ == "__main__":
     # Initialize the tokenizer
     tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14")
 
-    # Define the path to the CelebA dataset
-    celeba_image_dir = "./img_align_celeba"  # Update this path as needed
+    # Path to celeba dataset
+    celeba_image_dir = "./img_align_celeba"  
 
-    # Load the DataLoader with a maximum of 10,000 images
     dataloader = load_data(
         img_dir=celeba_image_dir,
         tokenizer=tokenizer,
-        batch_size=16,    # Adjust based on your GPU memory
+        batch_size=16,    
         shuffle=True,
-        num_workers=4,    # Adjust based on your CPU cores
-        max_images=None  # Limit to 10,000 images
+        num_workers=4,    
+        max_images=None  
     )
 
     # Iterate through one batch to verify
@@ -175,4 +140,4 @@ if __name__ == "__main__":
 
         print(f"Pixel Values Shape: {pixel_values.shape}")  # Expected: [batch_size, 3, 512, 512]
         print(f"Input IDs Shape: {input_ids.shape}")        # Expected: [batch_size, tokenizer_max_length]
-        break  # Remove this break to iterate through the entire dataset
+        break  

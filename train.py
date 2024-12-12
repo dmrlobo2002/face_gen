@@ -18,7 +18,7 @@ class Config:
 
     # Training parameters
     epochs = 5
-    batch_size = 16  # Adjust based on GPU memory
+    batch_size = 16  # Batch size, adjust to GPU memory
     learning_rate = 5e-6
     num_workers = 4
     save_steps = 500  # Save model every 500 steps
